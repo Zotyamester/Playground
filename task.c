@@ -164,10 +164,11 @@ bool async_init(size_t new_thread_count)
 error_at_thread_create:
 	for (size_t j = 0; j < i; j++)
 		pthread_kill(threads[j], 0);
-error_at_cond_init:
 	pthread_cond_destroy(&cv);
-error_at_mutex_init:
+error_at_cond_init:
 	pthread_mutex_destroy(&mtx);
+error_at_mutex_init:
+	tasks_destroy(&tasks);
 error_at_task_init:
 	free(threads);
 error_at_thread_malloc:
